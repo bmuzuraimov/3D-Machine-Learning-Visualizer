@@ -11,6 +11,18 @@ The 3D Machine Learning Visualizer is an educational tool designed to demystify 
 - **Multiple Algorithm Support:** Visualize and learn about different machine learning algorithms in one platform.
 - **Educational Tool:** Ideal for students, educators, or anyone curious about machine learning.
 
+
+Here’s what each part of the chart represents:
+- **User:** The starting point where the user interacts with the application.
+- **Dropdown Menu:** The UI element allowing the user to select which algorithm visualization to view.
+- **3D Visualization Scene:** Acts as a decision node based on the selected algorithm.
+- **Algorithm Visualization:** Individual visualization components for each algorithm.
+- **Adjust Parameters:** Represents the user's ability to adjust algorithm parameters.
+- **View Updated Visualization:** The result of parameter adjustments reflecting on the visualization.
+
+![Chart](./chart.svg)
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -61,5 +73,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Acknowledgements
 
 - [Three.js](https://threejs.org/)
-- [Your University or Organization Name]
-- [Contributors and Mentors]
+- Hong Kong Baptist University - Department of Computer Science
+- Dr. CHEN, Jie - Assistant Professor
+- Baiel Muzuraimov - Contributor
+- Mak Tsun Ho - Contributor
