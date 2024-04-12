@@ -1,7 +1,7 @@
 // Example in src/scenes/dbscan.js
 import * as THREE from 'three';
 
-export function initDecisionTreeScene() {
+export function initPCA() {
     const properties = {
         name: 'Decision Tree',
         description: 'A decision tree is a flowchart-like structure in which each internal node represents a test on an attribute, each branch represents the outcome of the test, and each leaf node represents a class label. Decision trees are commonly used in machine learning for classification tasks.'
