@@ -27,7 +27,7 @@ window.addEventListener("mousemove", onMouseMove, false);
 const originalColors = new Map();
 
 function updateObjectAppearance(object, highlight = true) {
-  if(!object.userData) return;
+  if (!object.userData) return;
   if (highlight) {
     originalColors.set(object, object.material.color.getHex());
     const oppositeColor = getOppositeColor(
@@ -92,7 +92,8 @@ function initLinesBetweenPoints(scene, points, exemplars) {
           lineGeometry,
           createBasicMaterial(point.cluster)
         );
-
+        line.castShadow = true;    // Enable shadow casting for this mesh
+        line.receiveShadow = true; // Enable shadow receiving for this mesh
         // Store the line and its target for animation
         line.userData = {
           startPosition,
@@ -118,6 +119,8 @@ async function visualizeAPModel(scene) {
   modelData.points.forEach((point) => {
     const sphere = createSphere(point, sphereGeometry, exemplarGeometry);
     sphere.position.set(point.x, point.y, point.z);
+    sphere.castShadow = true;    // Enable shadow casting for this mesh
+    sphere.receiveShadow = true;
     sphere.userData = {
       name: point.name,
       country: point.country,
@@ -158,17 +161,10 @@ export function initKMeansScene() {
       "Visualization of the Affinity Propagation clustering algorithm.",
   };
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.z = 5;
 
   visualizeAPModel(scene).catch(console.error);
 
-  function animate(renderer) {
+  function animate(renderer, camera) {
     camera.position.x = 20 * Math.sin(Date.now() * 0.00001);
     camera.position.z = 20 * Math.cos(Date.now() * 0.00001);
     camera.position.y = 20 * Math.sin(Date.now() * 0.00001);
@@ -178,5 +174,5 @@ export function initKMeansScene() {
     objectRaycaster(scene, camera, selectedObject);
   }
 
-  return { properties, scene, camera, animate };
+  return { properties, scene, animate };
 }

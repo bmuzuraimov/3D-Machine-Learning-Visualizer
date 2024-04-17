@@ -1,7 +1,5 @@
-import * as THREE from "three";
-
 export const PARTICLE_COLOR = 0x888888;
-export const FOG_COLOR = 0x000000;
+export const FOG_COLOR = 0xffffff;
 export const FOG_NEAR = 1;
 export const FOG_FAR = 1000;
 export const SPHERE_GEOMETRY = { small: 0.1, large: 0.3 };

@@ -27,14 +27,15 @@ window.addEventListener("mousemove", onMouseMove, false);
 const originalColors = new Map();
 
 function updateObjectAppearance(object, highlight = true) {
-  if(!object.userData) return;
+  if(object instanceof THREE.Line) return;
+  const scale = object.userData.isExemplar ? 1.1 : 2.0;
   if (highlight) {
     originalColors.set(object, object.material.color.getHex());
     const oppositeColor = getOppositeColor(
       object.material.color.getHexString()
     );
     object.material.color.set(oppositeColor);
-    object.scale.set(1.5, 1.5, 1.5);
+    object.scale.set(scale, scale, scale);
   } else {
     object.material.color.set(originalColors.get(object));
     object.scale.set(1, 1, 1);
@@ -92,6 +93,8 @@ function initLinesBetweenPoints(scene, points, exemplars) {
           lineGeometry,
           createBasicMaterial(point.cluster)
         );
+        line.castShadow = true;    // Enable shadow casting for this mesh
+        line.receiveShadow = true; // Enable shadow receiving for this mesh
 
         // Store the line and its target for animation
         line.userData = {
@@ -106,11 +109,8 @@ function initLinesBetweenPoints(scene, points, exemplars) {
   });
 }
 async function visualizeAPModel(scene) {
-  // Set scene fog
   scene.fog = new THREE.Fog(FOG_COLOR, FOG_NEAR, FOG_FAR);
-  // Initial large particle cloud setup
   createBackgroundParticles(scene);
-
   // Data dependent geometry
   const modelData = await fetchAPModel();
   const exemplars = [];
@@ -118,6 +118,8 @@ async function visualizeAPModel(scene) {
   modelData.points.forEach((point) => {
     const sphere = createSphere(point, sphereGeometry, exemplarGeometry);
     sphere.position.set(point.x, point.y, point.z);
+    sphere.castShadow = true;    // Enable shadow casting for this mesh
+    sphere.receiveShadow = true; // Enable shadow receiving for this mesh
     sphere.userData = {
       name: point.name,
       country: point.country,
@@ -129,7 +131,6 @@ async function visualizeAPModel(scene) {
       exemplars.push({ position: sphere.position, cluster: point.cluster });
     }
   });
-  // connectPointsToExemplars(scene, modelData.points, exemplars);
   initLinesBetweenPoints(scene, modelData.points, exemplars);
 }
 
@@ -145,7 +146,7 @@ function animateLines(scene) {
         );
         object.geometry.setFromPoints([startPosition, nextPosition]);
         object.geometry.attributes.position.needsUpdate = true; // Update the geometry
-        object.userData.progress += 0.01; // Increment progress, adjust this value for speed
+        object.userData.progress += 0.005; // Increment progress, adjust this value for speed
       }
     }
   });
@@ -158,25 +159,15 @@ export function initAPScene() {
       "Visualization of the Affinity Propagation clustering algorithm.",
   };
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.z = 5;
 
   visualizeAPModel(scene).catch(console.error);
 
-  function animate(renderer) {
-    camera.position.x = 20 * Math.sin(Date.now() * 0.00001);
-    camera.position.z = 20 * Math.cos(Date.now() * 0.00001);
-    camera.position.y = 20 * Math.sin(Date.now() * 0.00001);
+  function animate(renderer, camera) {
     camera.lookAt(scene.position);
     animateLines(scene);
     renderer.render(scene, camera);
     objectRaycaster(scene, camera, selectedObject);
   }
 
-  return { properties, scene, camera, animate };
+  return { properties, scene, animate };
 }

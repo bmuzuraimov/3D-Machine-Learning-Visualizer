@@ -8,13 +8,41 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x263238);
 document.body.appendChild(renderer.domElement);
+
+const camera = new THREE.PerspectiveCamera(
+  40,
+  window.innerWidth / window.innerHeight,
+  1,
+  1000
+);
+camera.position.set(15, 20, 30);
+
+// // create an AudioListener and add it to the camera
+// const listener = new THREE.AudioListener();
+// camera.add(listener);
+
+// // create a global audio source
+// const sound = new THREE.Audio(listener);
+
+// // load a sound and set it as the Audio object's buffer
+// const audioLoader = new THREE.AudioLoader();
+// var stream =
+//   "https://cdn.rawgit.com/ellenprobst/web-audio-api-with-Threejs/57582104/lib/TheWarOnDrugs.m4a";
+// audioLoader.load(stream, function (buffer) {
+//   sound.setBuffer(buffer);
+//   sound.setLoop(true);
+//   sound.setVolume(0.5);
+//   sound.play();
+// });
 
 // Assuming 'dat.GUI' has been included in your project.
 const gui = new GUI();
@@ -46,15 +74,12 @@ gui
         break;
     }
   });
-let lightProbe;
 let directionalLight;
 let ambientLight;
 // linear color space
 const API = {
-  lightProbeIntensity: 1.0,
   directionalLightIntensity: 1.0,
-  ambientLightIntensity: 0.1,
-  envMapIntensity: 1,
+  ambientLightIntensity: 0.5,
 };
 
 gui
@@ -74,22 +99,29 @@ gui.add(params, "animate");
 
 let currentAnimation;
 
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+window.addEventListener("resize", onWindowResize);
+
 async function switchScene(initSceneFunc) {
   if (currentAnimation) {
     cancelAnimationFrame(currentAnimation); // Stop the current animation
   }
   renderer.clear(); // Clear the current scene
 
-  const { properties, scene, camera, animate } = await initSceneFunc();
+  const { properties, scene, animate } = await initSceneFunc();
 
   // Add orbit controls
   const controls = new OrbitControls(camera, renderer.domElement);
-  // probe
-  lightProbe = new THREE.LightProbe();
-  scene.add(lightProbe);
+  controls.minDistance = 20;
+  controls.maxDistance = 50;
 
   // light
-  ambientLight = new THREE.AmbientLight(0xffffff, API.ambientLightIntensity);
+  ambientLight = new THREE.AmbientLight(0x666666, API.ambientLightIntensity);
   ambientLight.position.set(20, 20, 20);
   scene.add(ambientLight);
 
@@ -97,6 +129,11 @@ async function switchScene(initSceneFunc) {
     0xffffff,
     API.directionalLightIntensity
   );
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 512; // Default
+  directionalLight.shadow.mapSize.height = 512; // Default
+  directionalLight.shadow.camera.near = 0.5; // Default
+  directionalLight.shadow.camera.far = 500; // Default
   directionalLight.position.set(20, 20, 20);
   directionalLight.castShadow = true;
   scene.add(directionalLight);
@@ -104,7 +141,7 @@ async function switchScene(initSceneFunc) {
   document.getElementById("algorithm-name").textContent = properties.name;
 
   currentAnimation = requestAnimationFrame(function animateScene() {
-    animate(renderer);
+    animate(renderer, camera);
     currentAnimation = requestAnimationFrame(animateScene);
     renderer.render(scene, camera);
     controls.update();

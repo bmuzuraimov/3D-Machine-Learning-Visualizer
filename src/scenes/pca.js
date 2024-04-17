@@ -3,7 +3,7 @@ import * as THREE from "three";
 
 async function fetchRawDataModel() {
   try {
-    const response = await fetch('./raw_iris_data.json');
+    const response = await fetch('./api/pca/raw_iris_data.json');
     const modelData = await response.json();
     console.log("Raw data:", modelData);
     return modelData;
@@ -14,7 +14,7 @@ async function fetchRawDataModel() {
 
 async function fetchPCAModel() {
     try {
-      const response = await fetch('./iris_data_reduced.json');
+      const response = await fetch('./api/pca/iris_data_reduced.json');
       const modelData = await response.json();
       console.log("Model data:", modelData);
       return modelData;
@@ -29,13 +29,13 @@ function visualizePCAModel(scene, modelData, rawData) {
 
   // First, draw all points and collect exemplars
   modelData.forEach((point, index) => {
-    const Cluster0_material = new THREE.MeshBasicMaterial({
+    const Cluster0_material = new THREE.MeshPhongMaterial({
         color: "#0080ff",
     });
-    const Cluster1_material = new THREE.MeshBasicMaterial({
+    const Cluster1_material = new THREE.MeshPhongMaterial({
         color: "#ff0000",
     });
-    const Cluster2_material = new THREE.MeshBasicMaterial({
+    const Cluster2_material = new THREE.MeshPhongMaterial({
         color: "#ffff00",
     });
     let sphere
@@ -59,14 +59,14 @@ function visualizePCAModel(scene, modelData, rawData) {
   });
 
   rawData.forEach((point, index) => {
-    const gp0_pt_material = new THREE.MeshBasicMaterial({
+    const gp0_pt_material = new THREE.MeshPhongMaterial({
         color: "#0080ff",
     });
-    const gp1_pt_material = new THREE.MeshBasicMaterial({
+    const gp1_pt_material = new THREE.MeshPhongMaterial({
         color: "#ff0000",
         
     });
-    const gp2_pt_material = new THREE.MeshBasicMaterial({
+    const gp2_pt_material = new THREE.MeshPhongMaterial({
         color: "#ffff00",
     });
     let sphere
@@ -98,20 +98,16 @@ export async function initPCAScene() {
     description: "Visualization of the PCA algorithm.",
   };
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
 
   const rawData = await fetchRawDataModel();
   const modelData = await fetchPCAModel();
   visualizePCAModel(scene, modelData, rawData);
 
   // Example animation function
-  function animate(renderer) {
-    camera.position.x = 30 * Math.sin(Date.now() * 0.0001);
-    camera.position.z = 30 * Math.cos(Date.now() * 0.0001);
+  function animate(renderer, camera) {
     camera.lookAt(scene.position);
     renderer.render(scene, camera);
   }
 
-  return { properties, scene, camera, animate };
+  return { properties, scene, animate };
 }

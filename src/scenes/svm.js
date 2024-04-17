@@ -4,7 +4,7 @@ import { metalness, reflect } from "three/examples/jsm/nodes/Nodes.js";
 
 async function fetchSVMModel() {
   try {
-    const response = await fetch('./model_data_3D_SVM.json');
+    const response = await fetch('/api/svm/model_data_3D_SVM.json');
     const modelData = await response.json();
     console.log("Model data:", modelData);
     return modelData;
@@ -19,14 +19,14 @@ function visualizeSVMModel(scene, modelData) {
 
   // First, draw all points and collect exemplars
   modelData.points.forEach((point, index) => {
-    const gp0_pt_material = new THREE.MeshBasicMaterial({
+    const gp0_pt_material = new THREE.MeshPhongMaterial({
         color: "#0080ff",
     });
-    const gp1_pt_material = new THREE.MeshBasicMaterial({
+    const gp1_pt_material = new THREE.MeshPhongMaterial({
         color: "#ff0000",
         
     });
-    const SV_material = new THREE.MeshBasicMaterial({
+    const SV_material = new THREE.MeshPhongMaterial({
         color: "#ffff00",
     });
     let sphere
@@ -66,7 +66,7 @@ function visualizeSVMModel(scene, modelData) {
     planeGeometry.translate(midpoint.x, midpoint.y, midpoint.z); // Set the position to the midpoint
 
     // Create a material for the plane (customize as needed)
-    var planeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.DoubleSide });
+    var planeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00, side: THREE.DoubleSide });
 
     // Create the plane mesh and add it to the scene
     var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
@@ -146,17 +146,12 @@ export async function initSVMScene() {
     description: "Visualization of the Support Vector Machine algorithm.",
   };
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
 
   const modelData = await fetchSVMModel();
   visualizeSVMModel(scene, modelData);
 
   // Example animation function
-  function animate(renderer) {
-    camera.position.x = 30 * Math.sin(Date.now() * 0.0001);
-    camera.position.z = 30 * Math.cos(Date.now() * 0.0001);
-    camera.lookAt(scene.position);
+  function animate(renderer, camera) {
     renderer.shadowMap.enable = true;
     renderer.render(scene, camera);
   }
@@ -166,5 +161,5 @@ export async function initSVMScene() {
   if(PP){
     console.log(PP)
   }
-  return { properties, scene, camera, animate };
+  return { properties, scene, animate };
 }
