@@ -1,8 +1,8 @@
-import { initAPScene } from "./src/scenes/aprop.js";
-import { initSVMScene } from "./src/scenes/svm.js";
-import { initKMeansScene } from "./src/scenes/kmeans.js";
-import { initKNNScene } from "./src/scenes/knn.js";
-import { initPCA } from "./src/scenes/pca.js";
+import { initAPScene } from './src/scenes/aprop.js';
+import { initSVMScene } from './src/scenes/svm.js';
+import { initKMeansScene } from './src/scenes/kmeans.js';
+import { initKNNScene } from './src/scenes/knn.js';
+import { initPCAScene } from './src/scenes/pca.js';
 
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -42,7 +42,7 @@ gui
         switchScene(initKNNScene);
         break;
       case "pca":
-        switchScene(initPCA);
+        switchScene(initPCAScene);
         break;
     }
   });
