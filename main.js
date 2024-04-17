@@ -2,7 +2,7 @@ import { initAPScene } from './src/scenes/aprop.js';
 import { initSVMScene } from './src/scenes/svm.js';
 import { initKMeansScene } from './src/scenes/kmeans.js';
 import { initKNNScene } from './src/scenes/knn.js';
-import { initDecisionTreeScene } from './src/scenes/decisiontree.js';
+import { initPCAScene } from './src/scenes/pca.js';
 
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/Addons.js";
@@ -68,9 +68,9 @@ document.getElementById('algorithmSelector').addEventListener('change', (event) 
 		case 'knn':
 			switchScene(initKNNScene);
 			break;
-		case 'decisiontree':
-			switchScene(initDecisionTreeScene);
-			break;
+        case 'pca':
+            switchScene(initPCAScene);
+            break;
     }
 });
 
