@@ -1,0 +1,1009 @@
+{
+    "points": [
+        {
+            "name": "Alexander",
+            "country": "Kiribati",
+            "distance": 2.209378926903183,
+            "x": 4.651334678685248,
+            "y": -5.936338883451298,
+            "z": 4.728307843242238,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Benjamin",
+            "country": "Papua New Guinea",
+            "distance": 3.632350583244447,
+            "x": -6.359849671624702,
+            "y": -8.141505243021085,
+            "z": -3.8910965461377267,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Olivia",
+            "country": "Malaysia",
+            "distance": 4.440274648182376,
+            "x": 5.625632299948332,
+            "y": 9.065558428716916,
+            "z": 8.938717539800571,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Matthew",
+            "country": "Cambodia",
+            "distance": 5.339204551894034,
+            "x": -10.446806304448852,
+            "y": 7.250462902054375,
+            "z": -9.204115311213496,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Noah",
+            "country": "Micronesia",
+            "distance": 3.3911161352705874,
+            "x": -6.9271919492921885,
+            "y": 6.962962947546925,
+            "z": -9.08159402888925,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Evelyn",
+            "country": "Myanmar",
+            "distance": 3.09648168451214,
+            "x": 8.253271844213014,
+            "y": -8.159863016726847,
+            "z": 3.705062695177795,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Emma",
+            "country": "Papua New Guinea",
+            "distance": 3.8483109662065385,
+            "x": 6.987483554698377,
+            "y": 5.767792121931267,
+            "z": -10.061368935562989,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Emily",
+            "country": "Singapore",
+            "distance": 2.777231099924852,
+            "x": -5.978999958558359,
+            "y": -2.4282590121883296,
+            "z": -5.74617581459276,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Matthew",
+            "country": "Indonesia",
+            "distance": 1.542039570654281,
+            "x": 7.9001768350511785,
+            "y": 5.697285583404605,
+            "z": 5.793562296412884,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Alexander",
+            "country": "Papua New Guinea",
+            "distance": 3.8192735365634105,
+            "x": 5.123851396777627,
+            "y": 3.4944092799001476,
+            "z": 7.55498071166382,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Abigail",
+            "country": "Palau",
+            "distance": 1.6788216874273871,
+            "x": 6.604943795479563,
+            "y": 4.731355812638073,
+            "z": 5.274517668025724,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Elijah",
+            "country": "Myanmar",
+            "distance": 4.793923588842086,
+            "x": 5.1243599105111315,
+            "y": -6.99606490138461,
+            "z": 9.859064107633971,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Emily",
+            "country": "Malaysia",
+            "distance": 3.617390464352261,
+            "x": 5.3953944988493285,
+            "y": 3.9028940698658148,
+            "z": 3.1599641256420496,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Matthew",
+            "country": "Cambodia",
+            "distance": 3.192102590974635,
+            "x": 7.389498287312012,
+            "y": 4.548805243072831,
+            "z": -8.766727910790111,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Jayden",
+            "country": "Kiribati",
+            "distance": 2.3296619319182557,
+            "x": 8.652771793374061,
+            "y": -7.389135719462731,
+            "z": 5.700730919344658,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Jacob",
+            "country": "Australia",
+            "distance": 3.870946974513782,
+            "x": 9.528104691935328,
+            "y": 6.800314416734446,
+            "z": 7.957475968211479,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Isabella",
+            "country": "Nauru",
+            "distance": 3.0442958493183196,
+            "x": -7.194632137930725,
+            "y": 5.524156540527986,
+            "z": -8.848121817965064,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Ava",
+            "country": "Myanmar",
+            "distance": 4.709989183195636,
+            "x": 2.038407063552146,
+            "y": 5.3041757013476944,
+            "z": 6.31269793820796,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Henry",
+            "country": "Laos",
+            "distance": 1.8858157744032502,
+            "x": 6.8787834025290735,
+            "y": -5.666653009254942,
+            "z": 7.270062873784212,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Sofia",
+            "country": "Kiribati",
+            "distance": 2.4082029685111865,
+            "x": 6.752851062311259,
+            "y": -8.19880158116839,
+            "z": 6.596476348412112,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Aria",
+            "country": "Myanmar",
+            "distance": 2.13086586066088,
+            "x": -6.536006741902761,
+            "y": -4.39508720840721,
+            "z": -4.105496064452504,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Ava",
+            "country": "Thailand",
+            "distance": 3.5629019569152156,
+            "x": -4.719736947804816,
+            "y": 2.766087911378331,
+            "z": -6.048652248797871,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Lucas",
+            "country": "Nauru",
+            "distance": 1.6316910134753289,
+            "x": 4.986367291402625,
+            "y": 4.807371923098984,
+            "z": -6.105134592539093,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Lily",
+            "country": "Malaysia",
+            "distance": 1.9500670658032502,
+            "x": 6.637455305886043,
+            "y": -4.286338776194618,
+            "z": 4.697948813399706,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "James",
+            "country": "Indonesia",
+            "distance": 0.6879684154171385,
+            "x": -5.896109208407722,
+            "y": -4.5418188756449265,
+            "z": -5.742034178485179,
+            "cluster": 1,
+            "isExemplar": true
+        },
+        {
+            "name": "Aria",
+            "country": "Kiribati",
+            "distance": 3.14122273211789,
+            "x": 3.067151344394972,
+            "y": 7.042129752905517,
+            "z": -7.151575939626133,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Lily",
+            "country": "Vietnam",
+            "distance": 2.512763374578274,
+            "x": 4.347122922681971,
+            "y": -6.196905048850865,
+            "z": 4.673043427275785,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Harper",
+            "country": "Philippines",
+            "distance": 2.639287157446824,
+            "x": -6.478758355151853,
+            "y": 8.199319191774226,
+            "z": -4.689472538554805,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Evelyn",
+            "country": "Nauru",
+            "distance": 4.661276827416169,
+            "x": 10.766289549727883,
+            "y": -4.111041026019173,
+            "z": 4.174355549111683,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "William",
+            "country": "Indonesia",
+            "distance": 3.400809926164085,
+            "x": 4.615900304431218,
+            "y": 9.072754108491596,
+            "z": -5.427312622215441,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Benjamin",
+            "country": "Nauru",
+            "distance": 1.8978717886857424,
+            "x": -6.310020186181668,
+            "y": -4.771841259307839,
+            "z": -4.155586656866946,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Mia",
+            "country": "Marshall Islands",
+            "distance": 3.9265637808441727,
+            "x": -3.7211986309133986,
+            "y": -8.469651640707305,
+            "z": -5.195316717644902,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Ethan",
+            "country": "Australia",
+            "distance": 1.9732469364375032,
+            "x": -6.806353893946359,
+            "y": -3.555109859235145,
+            "z": -5.5834500438462795,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Charlotte",
+            "country": "Micronesia",
+            "distance": 5.565699012291216,
+            "x": -2.1541159470392306,
+            "y": -3.0389704171311513,
+            "z": -2.2648820791468602,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Sebastian",
+            "country": "Fiji",
+            "distance": 2.36095222275495,
+            "x": 6.773804995718524,
+            "y": 4.978389724862254,
+            "z": 3.638735631755176,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Lucas",
+            "country": "Papua New Guinea",
+            "distance": 1.686285771472042,
+            "x": 7.522075450293987,
+            "y": 6.243350032985656,
+            "z": 6.887726465490851,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Daniel",
+            "country": "Malaysia",
+            "distance": 3.3278383487996237,
+            "x": 3.9315143164310706,
+            "y": -4.636810963436746,
+            "z": 4.393180671652318,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Emma",
+            "country": "Myanmar",
+            "distance": 0.9825313990810184,
+            "x": 5.94363554332269,
+            "y": 6.856663741060835,
+            "z": 6.133034444766336,
+            "cluster": 0,
+            "isExemplar": true
+        },
+        {
+            "name": "Benjamin",
+            "country": "Thailand",
+            "distance": 2.9728745841622053,
+            "x": 8.234032576191705,
+            "y": -8.631814821023042,
+            "z": 5.0768307903705825,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Sophia",
+            "country": "Malaysia",
+            "distance": 3.824541887494154,
+            "x": -8.312364863643825,
+            "y": 7.562396203419986,
+            "z": -3.0110309110172624,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Evelyn",
+            "country": "Myanmar",
+            "distance": 2.349110362052615,
+            "x": 4.620900444499599,
+            "y": -6.911065007034686,
+            "z": 6.034958318050114,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Charlotte",
+            "country": "East Timor",
+            "distance": 4.0927510548281285,
+            "x": 2.127440388306986,
+            "y": 6.377557193587657,
+            "z": -4.952217952331589,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Matthew",
+            "country": "Indonesia",
+            "distance": 4.929891372122182,
+            "x": 5.037945763078424,
+            "y": 10.607833395367884,
+            "z": -8.120031645443095,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Michael",
+            "country": "Myanmar",
+            "distance": 3.1169382986485465,
+            "x": 5.404418241196543,
+            "y": 5.381974061905756,
+            "z": -9.352007612659953,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Olivia",
+            "country": "Vietnam",
+            "distance": 4.534683188334303,
+            "x": 5.129692896556725,
+            "y": -2.3014725430413163,
+            "z": 7.344589514024871,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Emma",
+            "country": "Malaysia",
+            "distance": 1.298313350325143,
+            "x": -6.986639766724388,
+            "y": 4.914277047966564,
+            "z": -5.167899907477149,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Emma",
+            "country": "Brunei",
+            "distance": 4.349608293273573,
+            "x": -2.9139708091865284,
+            "y": 3.414286180553103,
+            "z": -5.465898261301634,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Charlotte",
+            "country": "Marshall Islands",
+            "distance": 1.8333970539631885,
+            "x": 7.307237190880722,
+            "y": 7.7288723977190115,
+            "z": 4.515669959187116,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Benjamin",
+            "country": "Malaysia",
+            "distance": 7.127797390974971,
+            "x": 6.79809269128026,
+            "y": 0.4548144871466997,
+            "z": -2.0881753834986116,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Alexander",
+            "country": "Palau",
+            "distance": 5.321608715952767,
+            "x": 2.5874596187499748,
+            "y": 9.90155079046358,
+            "z": 4.980695636496693,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Ella",
+            "country": "Fiji",
+            "distance": 0.9353950442644322,
+            "x": 6.1768441740893225,
+            "y": 5.378227656603056,
+            "z": -5.805199667462433,
+            "cluster": 3,
+            "isExemplar": true
+        },
+        {
+            "name": "Alexander",
+            "country": "Brunei",
+            "distance": 2.6530157980375138,
+            "x": -6.623105064254745,
+            "y": -5.887669315540509,
+            "z": -8.330299681566713,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Alexander",
+            "country": "Marshall Islands",
+            "distance": 3.760232938102245,
+            "x": 7.2176876689509015,
+            "y": 3.9094932677060905,
+            "z": -3.5777094206345983,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Elizabeth",
+            "country": "Myanmar",
+            "distance": 1.9769053971757173,
+            "x": -6.084514303321285,
+            "y": 4.088109999014446,
+            "z": -6.691963551398773,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Harper",
+            "country": "Micronesia",
+            "distance": 2.600021586101011,
+            "x": 6.667348654748533,
+            "y": 8.988158146315213,
+            "z": 5.589683472468399,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Charlotte",
+            "country": "Thailand",
+            "distance": 5.365668618406898,
+            "x": 10.481786398402916,
+            "y": 9.735115980299934,
+            "z": 4.045444240247178,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Daniel",
+            "country": "New Zealand",
+            "distance": 2.3460324956167478,
+            "x": -8.2087666788569,
+            "y": 6.1043301585219485,
+            "z": -7.479125992782627,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Evelyn",
+            "country": "New Zealand",
+            "distance": 3.308396091588148,
+            "x": 7.688725952803094,
+            "y": -8.00043069477913,
+            "z": 2.910457806444777,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Alexander",
+            "country": "New Zealand",
+            "distance": 3.019875025679744,
+            "x": 7.379636329069577,
+            "y": 8.603692459129997,
+            "z": -7.256175119283158,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Ella",
+            "country": "Malaysia",
+            "distance": 3.8813629678292587,
+            "x": 2.834123205329836,
+            "y": 7.22075875821441,
+            "z": -8.377718515568057,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Avery",
+            "country": "Myanmar",
+            "distance": 4.0817692743308935,
+            "x": 2.772204304884097,
+            "y": 5.574519439572063,
+            "z": 4.209066877612649,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Michael",
+            "country": "Indonesia",
+            "distance": 3.98465243962998,
+            "x": -9.260396693932089,
+            "y": -5.074435488948452,
+            "z": -7.814596728766484,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Jacob",
+            "country": "Papua New Guinea",
+            "distance": 3.371679281606915,
+            "x": 8.30466312956624,
+            "y": 8.159237184073643,
+            "z": -7.626728518408406,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Chloe",
+            "country": "Myanmar",
+            "distance": 1.3926489049105524,
+            "x": 7.352866589892999,
+            "y": -4.846818366770118,
+            "z": 5.58340248884401,
+            "cluster": 2,
+            "isExemplar": true
+        },
+        {
+            "name": "Jacob",
+            "country": "Indonesia",
+            "distance": 2.020931286989517,
+            "x": -6.932838193471886,
+            "y": 4.1111074881634995,
+            "z": -6.820099386405097,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Isabella",
+            "country": "Malaysia",
+            "distance": 3.2614788626576146,
+            "x": -7.369620181880626,
+            "y": -7.741594298363763,
+            "z": -7.157699329528831,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Alexander",
+            "country": "Fiji",
+            "distance": 5.208445629411644,
+            "x": 10.539509247975214,
+            "y": 3.0912686508024705,
+            "z": 6.091517034602892,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Emma",
+            "country": "Malaysia",
+            "distance": 4.292474092136282,
+            "x": -2.1127576287014147,
+            "y": -6.8272379615194945,
+            "z": -7.494909622881515,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Benjamin",
+            "country": "Papua New Guinea",
+            "distance": 1.8664157277091873,
+            "x": 7.165907359506587,
+            "y": 5.201101941474249,
+            "z": -5.259888224304962,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "William",
+            "country": "Brunei",
+            "distance": 3.8273607444591864,
+            "x": -9.452565204663355,
+            "y": -5.645147715492494,
+            "z": -6.803561872416524,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Isabella",
+            "country": "Vietnam",
+            "distance": 2.2318315238385735,
+            "x": 7.898841613851522,
+            "y": -5.824897517229618,
+            "z": 3.549128962339664,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Henry",
+            "country": "Thailand",
+            "distance": 1.9253706894606664,
+            "x": 6.283906326641559,
+            "y": 5.36134316570981,
+            "z": -4.616922497859627,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Isabella",
+            "country": "Australia",
+            "distance": 1.67373250608517,
+            "x": 6.780186645375853,
+            "y": 4.69518283522596,
+            "z": -6.781906750375202,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Abigail",
+            "country": "Brunei",
+            "distance": 0.8484225804066983,
+            "x": -5.873476011599337,
+            "y": 6.313013075930751,
+            "z": -5.535637927599448,
+            "cluster": 4,
+            "isExemplar": true
+        },
+        {
+            "name": "Elijah",
+            "country": "Fiji",
+            "distance": 4.643091954540717,
+            "x": -3.0234956124088006,
+            "y": -2.2082216479388337,
+            "z": -3.6424408576806986,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Lucas",
+            "country": "Singapore",
+            "distance": 5.077924222444053,
+            "x": 6.626135403301802,
+            "y": 4.2918085213965504,
+            "z": 0.8940203683318426,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Harper",
+            "country": "East Timor",
+            "distance": 2.7866676756325997,
+            "x": -7.344920895551902,
+            "y": -6.719106323081083,
+            "z": -7.626292564088908,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Alexander",
+            "country": "Nauru",
+            "distance": 2.8476205540885102,
+            "x": -4.179642183814816,
+            "y": 6.634436430382604,
+            "z": -4.427344075782048,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Evelyn",
+            "country": "Nauru",
+            "distance": 2.1925481913878144,
+            "x": 6.814923672482221,
+            "y": -7.539832148890633,
+            "z": 7.078498382583635,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Lucas",
+            "country": "Myanmar",
+            "distance": 4.7821470129092996,
+            "x": -4.187910683449229,
+            "y": -7.722451370109405,
+            "z": -2.1798700938019326,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Jacob",
+            "country": "Nauru",
+            "distance": 2.9586920748785506,
+            "x": -6.707987822506968,
+            "y": 3.2500974131639624,
+            "z": -7.287236805665781,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Emily",
+            "country": "Philippines",
+            "distance": 3.4040420740989212,
+            "x": 6.821197003876745,
+            "y": 6.288087142321756,
+            "z": 8.90854701392595,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Matthew",
+            "country": "Philippines",
+            "distance": 3.991572262287984,
+            "x": -10.139970050027065,
+            "y": 6.852517461556202,
+            "z": -4.646183929939509,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Olivia",
+            "country": "Philippines",
+            "distance": 3.8614434753086644,
+            "x": -8.540969996971468,
+            "y": -4.061206583683978,
+            "z": -8.346246810228319,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Michael",
+            "country": "Papua New Guinea",
+            "distance": 1.2484374143532273,
+            "x": -7.476061818411377,
+            "y": 6.559849198086477,
+            "z": -6.196300779285916,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Lily",
+            "country": "Fiji",
+            "distance": 2.425929398508684,
+            "x": -6.078565636454991,
+            "y": 3.663813004517605,
+            "z": -4.953446678936492,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Ava",
+            "country": "Singapore",
+            "distance": 2.297114186674636,
+            "x": -6.343092662444496,
+            "y": 7.543581102427335,
+            "z": -4.352991692072537,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Sophia",
+            "country": "Micronesia",
+            "distance": 2.997402130863683,
+            "x": 8.376059584704603,
+            "y": -5.366114776150301,
+            "z": 7.841717647561638,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Noah",
+            "country": "Fiji",
+            "distance": 3.516867601249742,
+            "x": -4.198347026091626,
+            "y": -5.06867512053908,
+            "z": -9.072487372554448,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Isabella",
+            "country": "Fiji",
+            "distance": 1.364360823426481,
+            "x": 6.309894851393833,
+            "y": 6.756325039204347,
+            "z": 4.224428504739775,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Ethan",
+            "country": "Brunei",
+            "distance": 4.538282090161919,
+            "x": -6.034040827722881,
+            "y": 6.758303471110164,
+            "z": -1.4813820986182957,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Oliver",
+            "country": "Palau",
+            "distance": 5.637110176964017,
+            "x": -1.6735281014386203,
+            "y": 8.673055898872784,
+            "z": -6.738363675884887,
+            "cluster": 4,
+            "isExemplar": false
+        },
+        {
+            "name": "Daniel",
+            "country": "Singapore",
+            "distance": 1.521366717474656,
+            "x": 4.725125948895542,
+            "y": 5.205456371342405,
+            "z": -6.265761155173911,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Liam",
+            "country": "Philippines",
+            "distance": 2.7896031845560234,
+            "x": 8.460581361455441,
+            "y": 8.404759697568823,
+            "z": 5.2253463651840955,
+            "cluster": 0,
+            "isExemplar": false
+        },
+        {
+            "name": "Isabella",
+            "country": "Marshall Islands",
+            "distance": 4.0930075644198585,
+            "x": -5.196021273110596,
+            "y": -2.2336986058874913,
+            "z": -8.695518122284893,
+            "cluster": 1,
+            "isExemplar": false
+        },
+        {
+            "name": "Alexander",
+            "country": "Samoa",
+            "distance": 2.2645214486218843,
+            "x": 5.728100598643358,
+            "y": 8.27378272520539,
+            "z": -5.8045500645702885,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Ethan",
+            "country": "Samoa",
+            "distance": 3.203199620353664,
+            "x": 6.79201342532329,
+            "y": -8.18612301746101,
+            "z": 3.017484814588789,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Benjamin",
+            "country": "New Zealand",
+            "distance": 3.738619397062445,
+            "x": 5.863516789350737,
+            "y": -2.5733145567012667,
+            "z": 4.51049035590312,
+            "cluster": 2,
+            "isExemplar": false
+        },
+        {
+            "name": "Sebastian",
+            "country": "Fiji",
+            "distance": 4.82735070780366,
+            "x": 10.128985722718639,
+            "y": 5.7789186855350545,
+            "z": -3.9596545765684006,
+            "cluster": 3,
+            "isExemplar": false
+        },
+        {
+            "name": "Lily",
+            "country": "Nauru",
+            "distance": 2.1708856931974716,
+            "x": -4.046721927032575,
+            "y": -5.2872672056511965,
+            "z": -4.586853663616104,
+            "cluster": 1,
+            "isExemplar": false
+        }
+    ],
+    "parameters": {
+        "n_clusters": 5,
+        "init": "k-means++",
+        "n_init": 10
+    }
+}

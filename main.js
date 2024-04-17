@@ -1,8 +1,8 @@
-import { initAPScene } from './src/scenes/aprop.js';
-import { initSVMScene } from './src/scenes/svm.js';
-import { initKMeansScene } from './src/scenes/kmeans.js';
-import { initKNNScene } from './src/scenes/knn.js';
-import { initPCAScene } from './src/scenes/pca.js';
+import { initAPScene } from "./src/scenes/aprop.js";
+import { initSVMScene } from "./src/scenes/svm.js";
+import { initKMeansScene } from "./src/scenes/kmeans.js";
+import { initKNNScene } from "./src/scenes/knn.js";
+import { initPCAScene } from "./src/scenes/pca.js";
 
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -56,12 +56,6 @@ const API = {
   ambientLightIntensity: 0.1,
   envMapIntensity: 1,
 };
-gui
-  .add(API, "lightProbeIntensity", 0, 1, 0.02)
-  .name("light probe")
-  .onChange(function () {
-    lightProbe.intensity = API.lightProbeIntensity;
-  });
 
 gui
   .add(API, "ambientLightIntensity", 0, 1, 0.1)
@@ -74,13 +68,6 @@ gui
   .name("directional light")
   .onChange(function () {
     directionalLight.intensity = API.directionalLightIntensity;
-  });
-
-gui
-  .add(API, "envMapIntensity", 0, 1, 0.02)
-  .name("envMap")
-  .onChange(function () {
-    mesh.material.envMapIntensity = API.envMapIntensity;
   });
 
 gui.add(params, "animate");

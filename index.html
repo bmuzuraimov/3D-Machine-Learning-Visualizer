@@ -9,10 +9,24 @@
   <body>
     <div id="canvas-container" style="position: relative">
       <div
-        id="algorithm-name"
-        style="position: absolute; top: 10px; left: 10px; color: white"
+        id="infoPanel"
+        style="
+          position: absolute;
+          background: rgba(255, 255, 255, 0.8);
+          padding: 10px;
+          display: none;
+          border: 1px solid #000;
+          pointer-events: none;
+          z-index: 100;
+        "
       >
-      Affinity Propagation
+        Hover over an object to see details.
+      </div>
+      <div
+        id="algorithm-name"
+        style="position: absolute; top: 10px; left: 50%; color: white"
+      >
+        Affinity Propagation
       </div>
     </div>
     <script type="module" src="main.js"></script>
