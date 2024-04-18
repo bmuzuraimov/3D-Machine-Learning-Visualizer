@@ -72,7 +72,7 @@ function visualizeSVMModel(scene, modelData) {
     var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
     planeMesh.receiveShadow = true;
     planeMesh.name = "planeMesh"
-    scene.add(planeMesh);
+    // scene.add(planeMesh);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,7 +99,9 @@ function visualizeSVMModel(scene, modelData) {
       side: THREE.DoubleSide,
       metalness: 1,
       roughness: 0.35,
-      envMap: reflect
+      envMap: reflect,
+      transparent: false,
+      opacity: 0.5
     });
 
     // Create the plane mesh and add it to the scene
@@ -134,7 +136,7 @@ function visualizeSVMModel(scene, modelData) {
     var Lsoft_planeMesh = new THREE.Mesh(Lsoft_planeGeometry, Lsoft_planeMaterial);
     Lsoft_planeMesh.name = "Lsoft_planeMesh"
     Lsoft_planeMesh.receiveShadow = true;
-    scene.add(Lsoft_planeMesh);
+    // scene.add(Lsoft_planeMesh);
 
     const axesHelper = new THREE.AxesHelper( 20 );
     scene.add( axesHelper );

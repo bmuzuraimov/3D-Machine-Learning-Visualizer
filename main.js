@@ -51,6 +51,7 @@ const params = {
   algorithm: "aprop", // Default selected algorithm
 };
 
+let controllers = [];
 // Add the algorithm selector to the GUI
 gui
   .add(params, "algorithm", ["aprop", "svm", "kmeans", "knn", "pca"])
@@ -59,9 +60,51 @@ gui
     switch (algorithm) {
       case "aprop":
         switchScene(initAPScene);
+        // Loop through the controllers array and remove them
+        for (const controller of controllers) {
+            controller.domElement.parentNode.removeChild(controller.domElement);
+        }
+        controllers = [];
+        controllers.length = 0;
+        gui.controllers.splice(3);
+        console.log(gui.controllers)
         break;
+
       case "svm":
-        switchScene(initSVMScene);
+        let p = switchScene(initSVMScene);
+        console.log(p)
+        const opacityController = gui.add(SVMAPI, "opacity", 0, 1, 0.1)
+            .name("Opacity")
+            .onChange(function () 
+            {
+                p.then(scene => {
+                    scene.traverse(async function (child) {
+                        if (child.isMesh && child.name === "Usoft_planeMesh") 
+                        {
+                            child.material.opacity = SVMAPI.opacity;
+                        }
+                    });
+                }).catch(function(){console.log("failed")})
+            });
+        controllers.push(opacityController);
+
+        const transparencyController = gui.add(SVMAPI, "transparency")
+            .name("Transparent")
+            .onChange(function () 
+            {
+                p.then(scene => {
+                    scene.traverse(async function (child) {
+                        if (child.isMesh && child.name === "Usoft_planeMesh") 
+                        {
+                            child.material.transparent = SVMAPI.transparency;
+                            console.log(child.material.transparent)
+                            console.log(child.material.opacity)
+                        }
+                    });
+                }).catch(function(){console.log("failed")})
+            });
+        controllers.push(transparencyController);
+        // console.log(scene)
         break;
       case "kmeans":
         switchScene(initKMeansScene);
@@ -80,6 +123,11 @@ let ambientLight;
 const API = {
   directionalLightIntensity: 1.0,
   ambientLightIntensity: 0.5,
+};
+
+const SVMAPI = {
+    opacity: 0.5, // Initial opacity value
+    transparency: false
 };
 
 gui
@@ -146,6 +194,7 @@ async function switchScene(initSceneFunc) {
     renderer.render(scene, camera);
     controls.update();
   });
+  return scene;
 }
 
 // Initialize with the first scene
