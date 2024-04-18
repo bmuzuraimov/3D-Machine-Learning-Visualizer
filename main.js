@@ -39,7 +39,7 @@ const audioLoader = new THREE.AudioLoader();
 let currentScene, ambientLight, directionalLight;
 
 initLights();
-switchScene(initAPScene, 'aprop');
+switchScene(initAPScene, "aprop");
 
 function initLights() {
   ambientLight = new THREE.AmbientLight(0x777777);
@@ -48,11 +48,6 @@ function initLights() {
   directionalLight.shadow.mapSize.set(512, 512);
   directionalLight.shadow.camera.near = 0.5;
   directionalLight.shadow.camera.far = 500;
-}
-
-function updateLightIntensity() {
-  ambientLight.intensity = API.ambientLightIntensity;
-  directionalLight.intensity = API.directionalLightIntensity;
 }
 
 function onWindowResize() {
@@ -69,7 +64,7 @@ async function switchScene(initSceneFunc, name) {
   if (gui) gui.destroy(); // Destroy the current GUI
 
   gui = new GUI();
-  
+
   const params = { algorithm: name };
   gui
     .add(params, "algorithm", ["aprop", "svm", "kmeans", "pca"])
@@ -85,6 +80,11 @@ async function switchScene(initSceneFunc, name) {
     .add(API, "directionalLightIntensity", 0, 1, 0.1)
     .name("Directional Light")
     .onChange(updateLightIntensity);
+
+  function updateLightIntensity() {
+    ambientLight.intensity = API.ambientLightIntensity;
+    directionalLight.intensity = API.directionalLightIntensity;
+  }
 
   const { properties, scene, animate } = await initSceneFunc(
     renderer,
@@ -112,16 +112,16 @@ async function switchScene(initSceneFunc, name) {
 function switchSceneBasedOnAlgorithm(algorithm) {
   switch (algorithm) {
     case "aprop":
-      switchScene(initAPScene, 'aprop');
+      switchScene(initAPScene, "aprop");
       break;
     case "svm":
-      switchScene(initSVMScene, 'svm');
+      switchScene(initSVMScene, "svm");
       break;
     case "kmeans":
-      switchScene(initKMeansScene, 'kmeans');
+      switchScene(initKMeansScene, "kmeans");
       break;
     case "pca":
-      switchScene(initPCAScene, 'pca');
+      switchScene(initPCAScene, "pca");
       break;
   }
 }
