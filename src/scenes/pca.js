@@ -1,112 +1,64 @@
 // Example in src/scenes/dbscan.js
 import * as THREE from "three";
+import { createBackgroundParticles } from "../components/particles";
+import {
+  createGraniteMaterial,
+} from "../components/materials";
 
-async function fetchRawDataModel() {
+let dataPoints = [];
+
+async function fetchPCAModel() {
   try {
-    const response = await fetch('./api/pca/raw_iris_data.json');
+    const response = await fetch("./api/pca/data-model.json");
     const modelData = await response.json();
-    console.log("Raw data:", modelData);
     return modelData;
   } catch (error) {
-    console.error("Failed to fetch PCA raw data:", error);
+    console.error("Failed to fetch PCA model data:", error);
   }
 }
 
-async function fetchPCAModel() {
-    try {
-      const response = await fetch('./api/pca/iris_data_reduced.json');
-      const modelData = await response.json();
-      console.log("Model data:", modelData);
-      return modelData;
-    } catch (error) {
-      console.error("Failed to fetch PCA model data:", error);
-    }
-}
+function visualizePCAModel(scene, modelData) {
+  createBackgroundParticles(scene);
 
-function visualizePCAModel(scene, modelData, rawData) {
-  const geometry = new THREE.SphereGeometry(0.5); // Size of the spheres
-  console.log("PCA model data:", modelData);
+  const geometry = new THREE.SphereGeometry(0.3, 16, 16);
 
-  // First, draw all points and collect exemplars
-  modelData.forEach((point, index) => {
-    const Cluster0_material = new THREE.MeshPhongMaterial({
-        color: "#0080ff",
-    });
-    const Cluster1_material = new THREE.MeshPhongMaterial({
-        color: "#ff0000",
-    });
-    const Cluster2_material = new THREE.MeshPhongMaterial({
-        color: "#ffff00",
-    });
-    let sphere
-
-    if(point.Cluster === 0)
-    {
-        sphere = new THREE.Mesh(geometry, Cluster0_material);
-    }
-    else if(point.Cluster === 1)
-    {
-        sphere = new THREE.Mesh(geometry, Cluster1_material);
-    }
-    else
-    {
-        sphere = new THREE.Mesh(geometry, Cluster2_material);
-    }
-    // add cluster points to the scene
-    sphere.position.set(point.PC1 * 10, point.PC2 * 10, 0);
-    // scene.add(sphere); 
-    // uncomment this and comment the below scene.add(sphere) get 2D PCA
-  });
-
-  rawData.forEach((point, index) => {
-    const gp0_pt_material = new THREE.MeshPhongMaterial({
-        color: "#0080ff",
-    });
-    const gp1_pt_material = new THREE.MeshPhongMaterial({
-        color: "#ff0000",
-        
-    });
-    const gp2_pt_material = new THREE.MeshPhongMaterial({
-        color: "#ffff00",
-    });
-    let sphere
-    if(point.group === 0)
-    {
-        sphere = new THREE.Mesh(geometry, gp0_pt_material);
-    }
-    else if(point.group === 1)
-    {
-        sphere = new THREE.Mesh(geometry, gp1_pt_material);
-    }
-    else if(point.group === 2)
-    {
-        sphere = new THREE.Mesh(geometry, gp2_pt_material);
-    }
-    // set x,y,z coordinate for each point + adjusting values for better illustration
-    sphere.position.set(point.x * 6 - 22, point.y * 6 - 10, point.z * 6 - 5);
+  modelData.forEach((point) => {
+    const material = createGraniteMaterial(point.group);
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.position.set(point.x, point.y, point.z);
+    sphere.userData.target = new THREE.Vector3(point.PC1, point.PC2, 0);
     scene.add(sphere);
-    // uncomment this and comment the above scene.add(sphere) get 3D raw data plot
+    dataPoints.push(sphere);
   });
-
-  const axesHelper = new THREE.AxesHelper( 20 );
-  scene.add( axesHelper );
+  
+  const axesHelper = new THREE.AxesHelper(20);
+  scene.add(axesHelper);
 }
 
-export async function initPCAScene() {
+export async function initPCAScene(renderer, controls, camera, audioLoader, sound) {
   const properties = {
     name: "PCA",
     description: "Visualization of the PCA algorithm.",
   };
   const scene = new THREE.Scene();
 
-  const rawData = await fetchRawDataModel();
   const modelData = await fetchPCAModel();
-  visualizePCAModel(scene, modelData, rawData);
+
+  visualizePCAModel(scene, modelData);
 
   // Example animation function
-  function animate(renderer, camera) {
+  function animate() {
     camera.lookAt(scene.position);
     renderer.render(scene, camera);
+    dataPoints.forEach(point => {
+      point.position.lerp(point.userData.target, 0.005);
+      if (point.position.distanceTo(point.userData.target) < 0.3) {
+        point.position.copy(point.userData.target);
+      }
+      if (point.position.equals(point.userData.target)) {
+        point.material.emissive.set(0x111111);
+      }
+  });
   }
 
   return { properties, scene, animate };

@@ -6,6 +6,7 @@ import {
   createBasicMaterial,
 } from "../components/materials";
 import { sphereGeometry, exemplarGeometry } from "../components/geometries";
+import { playSound } from "../utils/audio";
 import {
   FOG_COLOR,
   FOG_NEAR,
@@ -14,36 +15,42 @@ import {
 } from "../utils/constants";
 
 const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
 
 let selectedObject = null;
+let lastHoveredObject = null;
+let soundBuffer = null;
 
+const mouse = new THREE.Vector2();
 function onMouseMove(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
 window.addEventListener("mousemove", onMouseMove, false);
 
-const originalColors = new Map();
+function updateObjectAppearance(object, audioLoader, sound, highlight = true) {
+  if (!(object instanceof THREE.Line) && !(object instanceof THREE.Points)) {
+    const scale = object.userData.isExemplar ? 1.1 : 2.0;
+    if (highlight) {
+      object.originalColor = object.material.color.getHex();
+      const oppositeColor = getOppositeColor(
+        object.material.color.getHexString()
+      );
+      object.material.color.set(oppositeColor);
+      object.scale.set(scale, scale, scale);
 
-function updateObjectAppearance(object, highlight = true) {
-  if(object instanceof THREE.Line) return;
-  const scale = object.userData.isExemplar ? 1.1 : 2.0;
-  if (highlight) {
-    originalColors.set(object, object.material.color.getHex());
-    const oppositeColor = getOppositeColor(
-      object.material.color.getHexString()
-    );
-    object.material.color.set(oppositeColor);
-    object.scale.set(scale, scale, scale);
-  } else {
-    object.material.color.set(originalColors.get(object));
-    object.scale.set(1, 1, 1);
-    originalColors.delete(object);
+      if (lastHoveredObject !== object) {
+        playSound(audioLoader, sound, soundBuffer);
+        lastHoveredObject = object;
+      }
+    } else {
+      object.material.color.setHex(object.originalColor);
+      object.scale.set(1, 1, 1);
+      sound.stop();
+    }
   }
 }
 
-function objectRaycaster(scene, camera) {
+function objectRaycaster(scene, camera, audioLoader, sound) {
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children, true);
 
@@ -51,24 +58,31 @@ function objectRaycaster(scene, camera) {
     const firstIntersectedObject = intersects[0].object;
     if (selectedObject !== firstIntersectedObject) {
       if (selectedObject) {
-        updateObjectAppearance(selectedObject, false);
+        updateObjectAppearance(selectedObject, audioLoader, sound, false);
       }
       selectedObject = firstIntersectedObject;
-      updateObjectAppearance(selectedObject, true);
-
-      const infoPanel = document.getElementById("infoPanel");
-      const userData = selectedObject.userData;
-      const message = userData.isExemplar
-        ? `Country: ${userData.country}`
-        : `User: ${userData.name}<br>Country: ${userData.country}<br>Distance: ${userData.distance}`;
-      infoPanel.innerHTML = message;
-      infoPanel.style.display = "block";
+      updateObjectAppearance(selectedObject, audioLoader, sound, true);
+      updateInfoPanel(selectedObject.userData);
     }
   } else if (selectedObject) {
-    updateObjectAppearance(selectedObject, false);
+    updateObjectAppearance(selectedObject, audioLoader, sound, false);
     selectedObject = null;
-    document.getElementById("infoPanel").style.display = "none";
+    hideInfoPanel();
   }
+}
+
+function updateInfoPanel(userData) {
+  const infoPanel = document.getElementById("infoPanel");
+  const message = userData.isExemplar
+    ? `Country: ${userData.country}`
+    : `User: ${userData.name}<br>Country: ${userData.country}<br>Distance: ${userData.distance}`;
+  infoPanel.innerHTML = message;
+  infoPanel.style.display = "block";
+}
+
+function hideInfoPanel() {
+  const infoPanel = document.getElementById("infoPanel");
+  infoPanel.style.display = "none";
 }
 
 function createSphere(point) {
@@ -93,14 +107,13 @@ function initLinesBetweenPoints(scene, points, exemplars) {
           lineGeometry,
           createBasicMaterial(point.cluster)
         );
-        line.castShadow = true;    // Enable shadow casting for this mesh
-        line.receiveShadow = true; // Enable shadow receiving for this mesh
+        line.castShadow = true;
+        line.receiveShadow = true;
 
-        // Store the line and its target for animation
         line.userData = {
           startPosition,
           endPosition,
-          progress: 0, // Progress is 0 initially
+          progress: 0,
         };
 
         scene.add(line);
@@ -111,14 +124,13 @@ function initLinesBetweenPoints(scene, points, exemplars) {
 async function visualizeAPModel(scene) {
   scene.fog = new THREE.Fog(FOG_COLOR, FOG_NEAR, FOG_FAR);
   createBackgroundParticles(scene);
-  // Data dependent geometry
   const modelData = await fetchAPModel();
   const exemplars = [];
 
   modelData.points.forEach((point) => {
-    const sphere = createSphere(point, sphereGeometry, exemplarGeometry);
+    const sphere = createSphere(point);
     sphere.position.set(point.x, point.y, point.z);
-    sphere.castShadow = true;    // Enable shadow casting for this mesh
+    sphere.castShadow = true; // Enable shadow casting for this mesh
     sphere.receiveShadow = true; // Enable shadow receiving for this mesh
     sphere.userData = {
       name: point.name,
@@ -132,6 +144,8 @@ async function visualizeAPModel(scene) {
     }
   });
   initLinesBetweenPoints(scene, modelData.points, exemplars);
+  const axesHelper = new THREE.AxesHelper(20);
+  scene.add(axesHelper);
 }
 
 function animateLines(scene) {
@@ -152,21 +166,25 @@ function animateLines(scene) {
   });
 }
 
-export function initAPScene() {
+export function initAPScene(renderer, controls, camera, audioLoader, sound) {
   const properties = {
     name: "Affinity Propagation",
     description:
       "Visualization of the Affinity Propagation clustering algorithm.",
   };
-  const scene = new THREE.Scene();
+  camera.position.x = -30;
+  camera.position.y = 3;
+  camera.position.z = 25;
 
+  const scene = new THREE.Scene();
   visualizeAPModel(scene).catch(console.error);
 
-  function animate(renderer, camera) {
+  function animate() {
     camera.lookAt(scene.position);
     animateLines(scene);
+    // console.log(camera.position);
     renderer.render(scene, camera);
-    objectRaycaster(scene, camera, selectedObject);
+    objectRaycaster(scene, camera, audioLoader, sound);
   }
 
   return { properties, scene, animate };

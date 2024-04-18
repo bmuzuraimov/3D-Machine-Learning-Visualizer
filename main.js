@@ -1,152 +1,88 @@
-import { initAPScene } from "./src/scenes/aprop.js";
-import { initSVMScene } from "./src/scenes/svm.js";
-import { initKMeansScene } from "./src/scenes/kmeans.js";
-import { initKNNScene } from "./src/scenes/knn.js";
-import { initPCAScene } from "./src/scenes/pca.js";
-
+import { initAPScene, initSVMScene, initKMeansScene, initPCAScene } from "./src/scenes";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x263238);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-const camera = new THREE.PerspectiveCamera(
-  40,
-  window.innerWidth / window.innerHeight,
-  1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 1000);
 camera.position.set(15, 20, 30);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.minDistance = 10;
+controls.maxDistance = 60;
+controls.enableTransform = false;
 
-// // create an AudioListener and add it to the camera
-// const listener = new THREE.AudioListener();
-// camera.add(listener);
+const listener = new THREE.AudioListener();
+camera.add(listener);
+const sound = new THREE.Audio(listener);
+const audioLoader = new THREE.AudioLoader();
 
-// // create a global audio source
-// const sound = new THREE.Audio(listener);
-
-// // load a sound and set it as the Audio object's buffer
-// const audioLoader = new THREE.AudioLoader();
-// var stream =
-//   "https://cdn.rawgit.com/ellenprobst/web-audio-api-with-Threejs/57582104/lib/TheWarOnDrugs.m4a";
-// audioLoader.load(stream, function (buffer) {
-//   sound.setBuffer(buffer);
-//   sound.setLoop(true);
-//   sound.setVolume(0.5);
-//   sound.play();
-// });
-
-// Assuming 'dat.GUI' has been included in your project.
 const gui = new GUI();
+const params = { algorithm: "aprop" };
+gui.add(params, "algorithm", ["aprop", "svm", "kmeans", "pca"]).name("Select Algorithm").onChange(switchSceneBasedOnAlgorithm);
 
-const params = {
-  algorithm: "aprop", // Default selected algorithm
-};
+const API = { directionalLightIntensity: 1.0, ambientLightIntensity: 0.5 };
+gui.add(API, "ambientLightIntensity", 0, 1, 0.1).name("Ambient Light").onChange(updateLightIntensity);
+gui.add(API, "directionalLightIntensity", 0, 1, 0.1).name("Directional Light").onChange(updateLightIntensity);
 
-// Add the algorithm selector to the GUI
-gui
-  .add(params, "algorithm", ["aprop", "svm", "kmeans", "knn", "pca"])
-  .name("Select Algorithm")
-  .onChange((algorithm) => {
-    switch (algorithm) {
-      case "aprop":
-        switchScene(initAPScene);
-        break;
-      case "svm":
-        switchScene(initSVMScene);
-        break;
-      case "kmeans":
-        switchScene(initKMeansScene);
-        break;
-      case "knn":
-        switchScene(initKNNScene);
-        break;
-      case "pca":
-        switchScene(initPCAScene);
-        break;
-    }
-  });
-let directionalLight;
-let ambientLight;
-// linear color space
-const API = {
-  directionalLightIntensity: 1.0,
-  ambientLightIntensity: 0.5,
-};
+let currentScene, ambientLight, directionalLight;
 
-gui
-  .add(API, "ambientLightIntensity", 0, 1, 0.1)
-  .name("ambient light")
-  .onChange(function () {
+initLights();
+switchScene(initAPScene); // Initial scene load
+
+function initLights() {
+    ambientLight = new THREE.AmbientLight(0x666666);
+    directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.mapSize.set(512, 512);
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 500;
+}
+
+function updateLightIntensity() {
     ambientLight.intensity = API.ambientLightIntensity;
-  });
-gui
-  .add(API, "directionalLightIntensity", 0, 1, 0.1)
-  .name("directional light")
-  .onChange(function () {
     directionalLight.intensity = API.directionalLightIntensity;
-  });
-
-gui.add(params, "animate");
-
-let currentAnimation;
+}
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
+
 window.addEventListener("resize", onWindowResize);
 
 async function switchScene(initSceneFunc) {
-  if (currentAnimation) {
-    cancelAnimationFrame(currentAnimation); // Stop the current animation
-  }
-  renderer.clear(); // Clear the current scene
+    if (currentScene) renderer.clear(); // Clear the current scene
+    if (currentScene) cancelAnimationFrame(currentScene); // Stop the current animation
 
-  const { properties, scene, animate } = await initSceneFunc();
+    const { properties, scene, animate } = await initSceneFunc(renderer, controls, camera, audioLoader, sound);
+    currentScene = requestAnimationFrame(function animateScene() {
+        currentScene = requestAnimationFrame(animateScene);
+        animate();
+        controls.update();
+    });
 
-  // Add orbit controls
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.minDistance = 20;
-  controls.maxDistance = 50;
+    scene.add(ambientLight);
+    scene.add(directionalLight);
+    controls.reset();
 
-  // light
-  ambientLight = new THREE.AmbientLight(0x666666, API.ambientLightIntensity);
-  ambientLight.position.set(20, 20, 20);
-  scene.add(ambientLight);
-
-  directionalLight = new THREE.DirectionalLight(
-    0xffffff,
-    API.directionalLightIntensity
-  );
-  directionalLight.castShadow = true;
-  directionalLight.shadow.mapSize.width = 512; // Default
-  directionalLight.shadow.mapSize.height = 512; // Default
-  directionalLight.shadow.camera.near = 0.5; // Default
-  directionalLight.shadow.camera.far = 500; // Default
-  directionalLight.position.set(20, 20, 20);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
-
-  document.getElementById("algorithm-name").textContent = properties.name;
-
-  currentAnimation = requestAnimationFrame(function animateScene() {
-    animate(renderer, camera);
-    currentAnimation = requestAnimationFrame(animateScene);
-    renderer.render(scene, camera);
-    controls.update();
-  });
+    if (document.getElementById("algorithm-name")) {
+        document.getElementById("algorithm-name").textContent = properties.name;
+    }
 }
 
-// Initialize with the first scene
-switchScene(initAPScene);
+function switchSceneBasedOnAlgorithm(algorithm) {
+    switch (algorithm) {
+        case "aprop": switchScene(initAPScene); break;
+        case "svm": switchScene(initSVMScene); break;
+        case "kmeans": switchScene(initKMeansScene); break;
+        case "pca": switchScene(initPCAScene); break;
+    }
+}

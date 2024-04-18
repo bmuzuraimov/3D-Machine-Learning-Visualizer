@@ -2,10 +2,11 @@ import * as THREE from "three";
 import { fetchAPModel } from "../services/kmeansService";
 import { createBackgroundParticles } from "../components/particles";
 import {
-  createPhongMaterial,
+  createGraniteMaterial,
   createBasicMaterial,
 } from "../components/materials";
 import { sphereGeometry, exemplarGeometry } from "../components/geometries";
+import { playSound } from "../utils/audio";
 import {
   FOG_COLOR,
   FOG_NEAR,
@@ -14,35 +15,39 @@ import {
 } from "../utils/constants";
 
 const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
 
 let selectedObject = null;
+let lastHoveredObject = null;
+let soundBuffer = null;
 
+const mouse = new THREE.Vector2();
 function onMouseMove(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
 window.addEventListener("mousemove", onMouseMove, false);
 
-const originalColors = new Map();
+function updateObjectAppearance(object, audioLoader, sound, highlight = true) {
+  if (object instanceof THREE.Line) return;
 
-function updateObjectAppearance(object, highlight = true) {
-  if (!object.userData) return;
+  const scale = object.userData.isExemplar ? 1.1 : 2.0;
   if (highlight) {
-    originalColors.set(object, object.material.color.getHex());
-    const oppositeColor = getOppositeColor(
-      object.material.color.getHexString()
-    );
+    object.originalColor = object.material.color.getHex();
+    const oppositeColor = getOppositeColor(object.material.color.getHexString());
     object.material.color.set(oppositeColor);
-    object.scale.set(1.5, 1.5, 1.5);
+    object.scale.set(scale, scale, scale);
+    if (lastHoveredObject !== object) {
+      playSound(audioLoader, sound, soundBuffer);
+      lastHoveredObject = object;
+    }
   } else {
-    object.material.color.set(originalColors.get(object));
+    object.material.color.setHex(object.originalColor);
     object.scale.set(1, 1, 1);
-    originalColors.delete(object);
+    sound.stop();
   }
 }
 
-function objectRaycaster(scene, camera) {
+function objectRaycaster(scene, camera, audioLoader, sound) {
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children, true);
 
@@ -50,30 +55,41 @@ function objectRaycaster(scene, camera) {
     const firstIntersectedObject = intersects[0].object;
     if (selectedObject !== firstIntersectedObject) {
       if (selectedObject) {
-        updateObjectAppearance(selectedObject, false);
+        updateObjectAppearance(selectedObject, audioLoader, sound, false);
       }
       selectedObject = firstIntersectedObject;
-      updateObjectAppearance(selectedObject, true);
-
-      const infoPanel = document.getElementById("infoPanel");
-      const userData = selectedObject.userData;
-      const message = userData.isExemplar
-        ? `Country: ${userData.country}`
-        : `User: ${userData.name}<br>Country: ${userData.country}<br>Distance: ${userData.distance}`;
-      infoPanel.innerHTML = message;
-      infoPanel.style.display = "block";
+      updateObjectAppearance(selectedObject, audioLoader, sound, true);
+      updateInfoPanel(selectedObject.userData);
     }
   } else if (selectedObject) {
-    updateObjectAppearance(selectedObject, false);
+    updateObjectAppearance(selectedObject, audioLoader, sound, false);
     selectedObject = null;
-    document.getElementById("infoPanel").style.display = "none";
+    hideInfoPanel();
   }
 }
 
+function updateInfoPanel(userData) {
+  const infoPanel = document.getElementById("infoPanel");
+  const message = userData.isExemplar
+    ? `Country: ${userData.country}`
+    : `User: ${userData.name}<br>Country: ${userData.country}<br>Distance: ${userData.distance}`;
+  infoPanel.innerHTML = message;
+  infoPanel.style.display = "block";
+}
+
+function hideInfoPanel() {
+  const infoPanel = document.getElementById("infoPanel");
+  infoPanel.style.display = "none";
+}
+
+
 function createSphere(point) {
+  // Create the material with the granite textures
+  const material = createGraniteMaterial(point.cluster);
+
   return new THREE.Mesh(
     point.isExemplar ? exemplarGeometry : sphereGeometry,
-    createPhongMaterial(point.cluster)
+    material,
   );
 }
 
@@ -154,24 +170,24 @@ function animateLines(scene) {
   });
 }
 
-export function initKMeansScene() {
+export function initKMeansScene(renderer, controls, camera, audioLoader, sound) {
   const properties = {
-    name: "Affinity Propagation",
+    name: "K-Means Clustering",
     description:
-      "Visualization of the Affinity Propagation clustering algorithm.",
+      "K-means clustering is a method of vector quantization, originally from signal processing, that aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean.",
   };
   const scene = new THREE.Scene();
 
   visualizeAPModel(scene).catch(console.error);
 
-  function animate(renderer, camera) {
+  function animate() {
     camera.position.x = 20 * Math.sin(Date.now() * 0.00001);
     camera.position.z = 20 * Math.cos(Date.now() * 0.00001);
     camera.position.y = 20 * Math.sin(Date.now() * 0.00001);
     camera.lookAt(scene.position);
     animateLines(scene);
     renderer.render(scene, camera);
-    objectRaycaster(scene, camera, selectedObject);
+    objectRaycaster(scene, camera, audioLoader, sound);
   }
 
   return { properties, scene, animate };
