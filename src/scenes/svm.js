@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { reflect } from "three/examples/jsm/nodes/Nodes.js";
 import { fetchSVMModel, createTextureMaterial } from "../services/svmService";
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 
 function visualizeSVMModel(scene, modelData) {
   const sphereGeometry = new THREE.SphereGeometry(0.6); // Standard size for all spheres
@@ -86,12 +87,26 @@ function visualizeSVMModel(scene, modelData) {
   scene.add(axesHelper);
 }
 
-export async function initSVMScene(renderer, controls, camera, audioLoader, sound) {
+export async function initSVMScene(
+  renderer,
+  controls,
+  camera,
+  audioLoader,
+  sound,
+  gui
+) {
   const properties = {
     name: "Support Vector Machine",
     description: "Visualization of the Support Vector Machine algorithm.",
   };
   const scene = new THREE.Scene();
+  // Load an HDR environment map
+  const loader = new RGBELoader();
+  loader.load("/textures/svm_background.hdr", (texture) => {
+    texture.encoding = THREE.RGBEEncoding;
+    scene.environment = texture;
+    scene.background = texture;
+  });
   camera.position.set(15, 20, 30);
   camera.lookAt(scene.position);
   const modelData = await fetchSVMModel();

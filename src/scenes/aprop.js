@@ -144,8 +144,6 @@ async function visualizeAPModel(scene) {
     }
   });
   initLinesBetweenPoints(scene, modelData.points, exemplars);
-  const axesHelper = new THREE.AxesHelper(20);
-  scene.add(axesHelper);
 }
 
 function animateLines(scene) {
@@ -166,23 +164,32 @@ function animateLines(scene) {
   });
 }
 
-export function initAPScene(renderer, controls, camera, audioLoader, sound) {
+export function initAPScene(renderer, controls, camera, audioLoader, sound, gui) {
   const properties = {
     name: "Affinity Propagation",
     description:
       "Visualization of the Affinity Propagation clustering algorithm.",
   };
-  camera.position.x = -30;
-  camera.position.y = 3;
-  camera.position.z = 25;
+  const gui_properties = {
+    animate: false,
+    animationSpeed: 0.00001,
+  };
+  gui
+    .add(gui_properties, "animationSpeed", 0.00001, 0.0001, 0.00001)
+    .name("Animation Speed");
+  gui.add(gui_properties, "animate").name("Animate");
 
   const scene = new THREE.Scene();
   visualizeAPModel(scene).catch(console.error);
 
   function animate() {
-    camera.lookAt(scene.position);
+    if (gui_properties.animate) {
+      camera.position.x = 30 * Math.sin(Date.now() * gui_properties.animationSpeed);
+      camera.position.z = 30 * Math.cos(Date.now() * gui_properties.animationSpeed);
+      camera.position.y = 30 * Math.sin(Date.now() * gui_properties.animationSpeed);
+      camera.lookAt(scene.position);
+    }
     animateLines(scene);
-    // console.log(camera.position);
     renderer.render(scene, camera);
     objectRaycaster(scene, camera, audioLoader, sound);
   }

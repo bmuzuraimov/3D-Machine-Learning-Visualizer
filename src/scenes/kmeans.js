@@ -33,7 +33,9 @@ function updateObjectAppearance(object, audioLoader, sound, highlight = true) {
   const scale = object.userData.isExemplar ? 1.1 : 2.0;
   if (highlight) {
     object.originalColor = object.material.color.getHex();
-    const oppositeColor = getOppositeColor(object.material.color.getHexString());
+    const oppositeColor = getOppositeColor(
+      object.material.color.getHexString()
+    );
     object.material.color.set(oppositeColor);
     object.scale.set(scale, scale, scale);
     if (lastHoveredObject !== object) {
@@ -82,14 +84,13 @@ function hideInfoPanel() {
   infoPanel.style.display = "none";
 }
 
-
 function createSphere(point) {
   // Create the material with the granite textures
   const material = createGraniteMaterial(point.cluster);
 
   return new THREE.Mesh(
     point.isExemplar ? exemplarGeometry : sphereGeometry,
-    material,
+    material
   );
 }
 
@@ -108,7 +109,7 @@ function initLinesBetweenPoints(scene, points, exemplars) {
           lineGeometry,
           createBasicMaterial(point.cluster)
         );
-        line.castShadow = true;    // Enable shadow casting for this mesh
+        line.castShadow = true; // Enable shadow casting for this mesh
         line.receiveShadow = true; // Enable shadow receiving for this mesh
         // Store the line and its target for animation
         line.userData = {
@@ -135,7 +136,7 @@ async function visualizeAPModel(scene) {
   modelData.points.forEach((point) => {
     const sphere = createSphere(point, sphereGeometry, exemplarGeometry);
     sphere.position.set(point.x, point.y, point.z);
-    sphere.castShadow = true;    // Enable shadow casting for this mesh
+    sphere.castShadow = true; // Enable shadow casting for this mesh
     sphere.receiveShadow = true;
     sphere.userData = {
       name: point.name,
@@ -170,7 +171,14 @@ function animateLines(scene) {
   });
 }
 
-export function initKMeansScene(renderer, controls, camera, audioLoader, sound) {
+export function initKMeansScene(
+  renderer,
+  controls,
+  camera,
+  audioLoader,
+  sound,
+  gui
+) {
   const properties = {
     name: "K-Means Clustering",
     description:
@@ -180,11 +188,22 @@ export function initKMeansScene(renderer, controls, camera, audioLoader, sound) 
 
   visualizeAPModel(scene).catch(console.error);
 
+  const gui_properties = {
+    animate: false,
+    animationSpeed: 0.00001,
+  };
+  gui
+    .add(gui_properties, "animationSpeed", 0.00001, 0.0001, 0.00001)
+    .name("Animation Speed");
+  gui.add(gui_properties, "animate").name("Animate");
+
   function animate() {
-    camera.position.x = 20 * Math.sin(Date.now() * 0.00001);
-    camera.position.z = 20 * Math.cos(Date.now() * 0.00001);
-    camera.position.y = 20 * Math.sin(Date.now() * 0.00001);
-    camera.lookAt(scene.position);
+    if (gui_properties.animate) {
+      camera.position.x = 30 * Math.sin(Date.now() * gui_properties.animationSpeed);
+      camera.position.z = 30 * Math.cos(Date.now() * gui_properties.animationSpeed);
+      camera.position.y = 30 * Math.sin(Date.now() * gui_properties.animationSpeed);
+      camera.lookAt(scene.position);
+    }
     animateLines(scene);
     renderer.render(scene, camera);
     objectRaycaster(scene, camera, audioLoader, sound);

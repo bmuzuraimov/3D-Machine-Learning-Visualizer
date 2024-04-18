@@ -1,9 +1,8 @@
 // Example in src/scenes/dbscan.js
 import * as THREE from "three";
 import { createBackgroundParticles } from "../components/particles";
-import {
-  createGraniteMaterial,
-} from "../components/materials";
+import { createGraniteMaterial } from "../components/materials";
+import { data } from "autoprefixer";
 
 let dataPoints = [];
 
@@ -30,35 +29,51 @@ function visualizePCAModel(scene, modelData) {
     scene.add(sphere);
     dataPoints.push(sphere);
   });
-  
+
   const axesHelper = new THREE.AxesHelper(20);
   scene.add(axesHelper);
 }
 
-export async function initPCAScene(renderer, controls, camera, audioLoader, sound) {
+export async function initPCAScene(
+  renderer,
+  controls,
+  camera,
+  audioLoader,
+  sound,
+  gui
+) {
   const properties = {
     name: "PCA",
     description: "Visualization of the PCA algorithm.",
   };
-  const scene = new THREE.Scene();
+  const gui_properties = {
+    animate: false,
+    animationSpeed: 0.005,
+  };
+  gui.add(gui_properties, "animationSpeed", 0.001, 0.01, 0.001).name("Animation Speed");
+  gui.add(gui_properties, "animate").name("Animate")
 
+  const scene = new THREE.Scene();
+  
   const modelData = await fetchPCAModel();
 
   visualizePCAModel(scene, modelData);
-
+  camera.lookAt(scene.position);
   // Example animation function
   function animate() {
     camera.lookAt(scene.position);
     renderer.render(scene, camera);
-    dataPoints.forEach(point => {
-      point.position.lerp(point.userData.target, 0.005);
-      if (point.position.distanceTo(point.userData.target) < 0.3) {
-        point.position.copy(point.userData.target);
-      }
-      if (point.position.equals(point.userData.target)) {
-        point.material.emissive.set(0x111111);
-      }
-  });
+    if (gui_properties.animate) {
+      dataPoints.forEach((point) => {
+        point.position.lerp(point.userData.target, gui_properties.animationSpeed);
+        if (point.position.distanceTo(point.userData.target) < 0.3) {
+          point.position.copy(point.userData.target);
+        }
+        if (point.position.equals(point.userData.target)) {
+          point.material.emissive.set(0x111111);
+        }
+      });
+    }
   }
 
   return { properties, scene, animate };
