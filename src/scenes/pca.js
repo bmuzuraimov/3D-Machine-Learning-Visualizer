@@ -43,7 +43,7 @@ export async function initPCAScene(
   gui
 ) {
   const properties = {
-    name: "PCA",
+    name: "PCA 3D -> 2D",
     description: "Visualization of the PCA algorithm.",
   };
   const gui_properties = {

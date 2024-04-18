@@ -82,9 +82,6 @@ function visualizeSVMModel(scene, modelData) {
   const hard_margin = addMarginPlane(modelData.hard_Bdy, 0xff0000); // Hard margin
   const upper_margin = addMarginPlane(modelData.upper_soft_Bdy, 0xffff00); // Upper soft margin
   const lower_margin = addMarginPlane(modelData.lower_soft_Bdy, 0xffff00); // Lower soft margin
-
-  const axesHelper = new THREE.AxesHelper(20);
-  scene.add(axesHelper);
 }
 
 export async function initSVMScene(
