@@ -12,7 +12,6 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x263238);
-renderer.setClearAlpha(0.9);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
@@ -45,6 +44,7 @@ function initLights() {
   ambientLight = new THREE.AmbientLight(0x777777);
   directionalLight = new THREE.DirectionalLight(0xffffff);
   directionalLight.castShadow = true;
+  directionalLight.position.set(20, 20, 20);
   directionalLight.shadow.mapSize.set(512, 512);
   directionalLight.shadow.camera.near = 0.5;
   directionalLight.shadow.camera.far = 500;
